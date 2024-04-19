@@ -1,3 +1,4 @@
+
 // Define the canvas element
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
@@ -192,10 +193,6 @@ function drawBackground() {
   drawTree(canvas.width * 0.3, canvas.height * 0.65, 30, 60);
   drawTree(canvas.width * 0.9, canvas.height * 0.55, 50, 100);
 
-  // Birds
-  drawBird(canvas.width * 0.4, canvas.height * 0.1);
-  drawBird(canvas.width * 0.5, canvas.height * 0.15);
-  drawBird(canvas.width * 0.6, canvas.height * 0.1);
 }
 
 // Function to draw a tree
@@ -214,14 +211,3 @@ function drawTree(x, y, trunkWidth, trunkHeight) {
   ctx.fill();
 }
 
-// Function to draw a bird
-function drawBird(x, y) {
-  ctx.beginPath();
-  ctx.moveTo(x, y);
-  ctx.lineTo(x + 20, y - 10);
-  ctx.lineTo(x + 40, y);
-  ctx.lineTo(x + 20, y + 10);
-  ctx.closePath();
-  ctx.fillStyle = '#000000'; // Black
-  ctx.fill();
-}
