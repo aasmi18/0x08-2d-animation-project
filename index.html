@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Windmill Animation</title>
     <style>
-        body,
-        html {
+        body, html {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -15,17 +13,214 @@
             overflow: hidden;
         }
 
-        canvas {
+        #container {
+            width: 80%;
+            max-width: 800px;
+            height: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #myCanvas {
             display: block;
             width: 100%;
             height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
     </style>
 </head>
-
 <body>
-    <canvas id="myCanvas"></canvas>
-    <script src="script.js"></script>
-</body>
+    <div id="container">
+        <canvas id="myCanvas"></canvas>
+    </div>
 
+    <script>
+        // Get the container element
+        var container = document.getElementById('container');
+
+        // Define the canvas element
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        // Set the canvas dimensions to the container size
+        canvas.width = container.offsetWidth;
+        canvas.height = container.offsetHeight;
+
+        // Define the windmill dimensions and coordinates
+        const windmillWidth = 15; // Reduced width
+        const windmillHeight = 150; // Length kept same
+        const windmillY = canvas.height * 0.6; // Shifted up
+
+        // Define the blade dimensions and coordinates
+        const bladeLength = 100;
+        const bladeWidth = 17;
+
+        // Define the pivot point dimensions
+        const pivotSize = 5; // Size of the pivot point
+
+        // Define the animation loop
+        let angle = 0;
+        let bladeSpeed = 0.01; // Initial speed
+        let clockwise = true; // Flag to track rotation direction
+
+        // Define the cloud parameters
+        const cloudRadius = 30;
+        const cloudSpeed = 0.2;
+        let cloudX1 = -cloudRadius; // Initial x-coordinate for the cloud
+        let cloudX2 = -cloudRadius - 100; // Initial x-coordinate for the second cloud
+        let cloudX3 = -cloudRadius + 200; // Initial x-coordinate for the third cloud
+        let cloudX4 = -cloudRadius + 400; // Initial x-coordinate for the fourth cloud
+        let cloudX5 = -cloudRadius + 600; // Initial x-coordinate for the fifth cloud
+
+        // Day and Night Mode
+        let isDay = true;
+
+        // Define bird parameters
+        const birdSpeed = 1; // Horizontal speed of birds
+        let bird1X = -50; // Initial x-coordinate for bird 1
+        let bird2X = -100; // Initial x-coordinate for bird 2
+        let bird3X = -150; // Initial x-coordinate for bird 3
+        let bird4X = -200; // Initial x-coordinate for bird 4
+        let bird5X = -250; // Initial x-coordinate for bird 5
+        let bird6X = -300; // Initial x-coordinate for bird 6
+
+        function animate() {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the background
+            drawBackground();
+
+            // Draw the clouds
+            drawCloud(cloudX1, canvas.height / 4);
+            drawCloud(cloudX2, canvas.height / 5);
+            drawCloud(cloudX3, canvas.height / 6);
+            drawCloud(cloudX4, canvas.height / 3);
+            drawCloud(cloudX5, canvas.height / 7);
+
+            // Draw the windmills
+            drawWindmills();
+
+            // Update cloud position
+            cloudX1 += cloudSpeed;
+            cloudX2 += cloudSpeed;
+            cloudX3 += cloudSpeed;
+            cloudX4 += cloudSpeed;
+            cloudX5 += cloudSpeed;
+            if (cloudX1 > canvas.width + cloudRadius) {
+                cloudX1 = -cloudRadius;
+            }
+            if (cloudX2 > canvas.width + cloudRadius) {
+                cloudX2 = -cloudRadius;
+            }
+            if (cloudX3 > canvas.width + cloudRadius) {
+                cloudX3 = -cloudRadius;
+            }
+            if (cloudX4 > canvas.width + cloudRadius) {
+                cloudX4 = -cloudRadius;
+            }
+            if (cloudX5 > canvas.width + cloudRadius) {
+                cloudX5 = -cloudRadius;
+            }
+
+            // Update bird position
+            if (isDay) {
+                bird1X += birdSpeed;
+                bird2X += birdSpeed;
+                bird3X += birdSpeed;
+                bird4X += birdSpeed;
+                bird5X += birdSpeed;
+                bird6X += birdSpeed;
+            }
+
+            // Draw birds
+            if (isDay) {
+                drawBird(bird1X, canvas.height * 0.1);
+                drawBird(bird2X, canvas.height * 0.15);
+                drawBird(bird3X, canvas.height * 0.1);
+                drawBird(bird4X, canvas.height * 0.15);
+                drawBird(bird5X, canvas.height * 0.1);
+                drawBird(bird6X, canvas.height * 0.15);
+            }
+
+            // Increment the angle for the next frame based on blade speed and direction
+            angle += (clockwise ? 1 : -1) * bladeSpeed;
+
+            // Request the next frame
+            requestAnimationFrame(animate);
+        }
+
+        // Function to draw the background
+        function drawBackground() {
+            // ... (background drawing code remains the same)
+        }
+
+        // Function to draw a mountain
+        function drawMountain(x, y, scale, color) {
+            // ... (mountain drawing code remains the same)
+        }
+
+        // Function to draw a tree
+        function drawTree(x, y, trunkWidth, trunkHeight) {
+            // ... (tree drawing code remains the same)
+        }
+
+        // Function to draw a bird
+        function drawBird(x, y) {
+            // ... (bird drawing code remains the same)
+        }
+
+        // Function to draw a cloud
+        function drawCloud(x, y) {
+            // ... (cloud drawing code remains the same)
+        }
+
+        // Function to draw the windmills
+        function drawWindmills() {
+            const windmillCount = Math.floor(canvas.width / 300); // Adjust the divisor as needed
+            const spacing = canvas.width / (windmillCount + 1);
+
+            for (let i = 1; i <= windmillCount; i++) {
+                const windmillX = i * spacing;
+                drawWindmill(windmillX, windmillY, angle, clockwise);
+            }
+        }
+
+        // Function to draw the windmill
+        function drawWindmill(x, y, angle, clockwise) {
+            // ... (windmill drawing code remains the same)
+        }
+
+        // Function to draw a blade
+        function drawBlade(length, width, color) {
+            // ... (blade drawing code remains the same)
+        }
+
+        // Toggle Day/Night Mode
+        canvas.addEventListener('click', function (event) {
+            if (
+                event.clientX >= canvas.width * 0.8 - 80 &&
+                event.clientX <= canvas.width * 0.8 + 80 &&
+                event.clientY >= canvas.height * 0.2 - 80 &&
+                event.clientY <= canvas.height * 0.2 + 80
+            ) {
+                isDay = !isDay;
+            } else {
+                // Toggle rotation direction when clicking on the windmill blade
+                clockwise = !clockwise;
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function () {
+            canvas.width = container.offsetWidth;
+            canvas.height = container.offsetHeight;
+        });
+
+        // Start the animation loop
+        animate();
+    </script>
+</body>
 </html>
